@@ -56,6 +56,9 @@ Expected suspicious output:
 ```
 2024-11-15 09:45:03,221 [INFO] Successful login: admin@prabalurja.in from 203.0.1.X
 ```
+<img width="1586" height="264" alt="image" src="https://github.com/user-attachments/assets/506685f6-aa45-410c-b994-56c037e40083" />
+
+
 
 ### 3 — Network Level Detection
 
