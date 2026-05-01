@@ -123,7 +123,7 @@ def _pul_enforce_localhost_host_header_for_password_reset():
     # Strict by design: only Host: 127.0.0.1 is accepted.
     # Host: attacker.com, Host: <public-ip>:8080, and Host: 127.0.0.1:8080 are denied.
     if incoming_host != _PUL_ALLOWED_RESET_HOST:
-        _pul_abort(403, description="Password reset is only available from the internal localhost Host header.")
+        _pul_abort(403, description="You are not authorised to reset password of any user. This will be logged.")
 
     return None
 # --- END PUL LAB PATCH ---
