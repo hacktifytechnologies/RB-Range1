@@ -87,6 +87,8 @@ Expected:
   echo "QUIT"
 ) | nc 203.x.x.x 25
 ```
+<img width="1176" height="998" alt="image" src="https://github.com/user-attachments/assets/a78b4c6f-29c7-48ef-964e-8c1eebad2bc8" />
+
 
 A `250 Ok: queued` response confirms the relay accepted the message without authentication.
 
