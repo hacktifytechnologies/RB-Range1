@@ -40,6 +40,9 @@ Requests containing a JWT cookie where the header decodes to `{"alg":"none"}` ca
 # Signature: pul_staff_token header segment = eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0
 ```
 
+<img width="1986" height="238" alt="image" src="https://github.com/user-attachments/assets/836cbd76-90b0-4fad-a21e-cf5d26f87de3" />
+
+
 ---
 
 ## Containment
