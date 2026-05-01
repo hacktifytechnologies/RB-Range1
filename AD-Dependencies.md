@@ -26,7 +26,7 @@ It is split into two sections:
 | Primary DC Hostname | `DC01-CORPUL` |
 | Primary DC IP | `193.x.x.x` (v-Private zone) |
 | Secondary DC Hostname | `DC02-CORPUL` (optional, for realism) |
-| Secondary DC IP | `193.0.x.x` |
+| Secondary DC IP | `193.x.x.x` |
 | DNS Zone | `corp.prabalurja.in` must resolve within the exercise network |
 | AD Recycle Bin | Enabled (required for realism of deleted object challenges) |
 
@@ -205,10 +205,10 @@ This is the machine that RNG-IT-02 M5 pivots to. It must be provisioned and acce
 |---|---|
 | Hostname | `dev-jump` |
 | FQDN | `dev-jump.prabalurja.in` |
-| IP Address | `11.0.x.x` (v-DMZ zone) |
+| IP Address | `11.x.x.x` (v-DMZ zone) |
 | OS | Ubuntu 22.04 LTS |
 | AD Join | Not domain-joined - standalone Linux |
-| DNS Record | A record in your DNS: `dev-jump.prabalurja.in` → `11.0.x.x` |
+| DNS Record | A record in your DNS: `dev-jump.prabalurja.in` → `11.x.x.x` |
 | SSH Port | `22` |
 | SSH User | `devops` (local account - NOT AD account) |
 
@@ -239,13 +239,13 @@ The following DNS A records must be created in your DNS infrastructure (which sh
 | Hostname | Record Type | Value |
 |---|---|---|
 | `dc01-corpul.corp.prabalurja.in` | A | `193.x.x.x` |
-| `dc02-corpul.corp.prabalurja.in` | A | `193.0.x.x` |
-| `dev-jump.prabalurja.in` | A | `11.0.x.x` |
-| `ldap.prabalurja.in` | A | `203.0.x.x` |
-| `git.prabalurja.in` | A | `203.0.x.x` |
-| `vault.prabalurja.in` | A | `203.0.x.x` |
-| `monitor.prabalurja.in` | A | `203.0.x.x` |
-| `ansible.prabalurja.in` | A | `203.0.x.x` |
+| `dc02-corpul.corp.prabalurja.in` | A | `193.x.x.x` |
+| `dev-jump.prabalurja.in` | A | `11.x.x.x` |
+| `ldap.prabalurja.in` | A | `203.x.x.x` |
+| `git.prabalurja.in` | A | `203.x.x.x` |
+| `vault.prabalurja.in` | A | `203.x.x.x` |
+| `monitor.prabalurja.in` | A | `203.x.x.x` |
+| `ansible.prabalurja.in` | A | `203.x.x.x` |
 | `ad.corp.prabalurja.in` | CNAME | `dc01-corpul.corp.prabalurja.in` |
 
 ---
@@ -283,11 +283,11 @@ ssh-ed25519 AAAA[base64-key-material] devops@dev-jump.prabalurja.in GridFall-202
 
 ## B.2 Confirmed DC IP and DNS Resolution
 
-**What we need:** Confirmation that `193.0.x.x` is the DC01 IP **and** that DNS resolution for `corp.prabalurja.in` works from within `203.0.x.x/24` (our zone).
+**What we need:** Confirmation that `193.x.x.x` is the DC01 IP **and** that DNS resolution for `corp.prabalurja.in` works from within `203.x.x.x/24` (our zone).
 
-**Why:** Vault `secret/pul/ad` on M3 contains `dc_host: 203.0.x.x` as a placeholder. If your DC is at a different IP or DNS doesn't resolve cross-zone, we need to update this value before snapshot.
+**Why:** Vault `secret/pul/ad` on M3 contains `dc_host: 203.x.x.x` as a placeholder. If your DC is at a different IP or DNS doesn't resolve cross-zone, we need to update this value before snapshot.
 
-**Provide:** Confirmed DC01 IP, confirmed DNS server IP reachable from `203.0.x.x/24`.
+**Provide:** Confirmed DC01 IP, confirmed DNS server IP reachable from `203.x.x.x/24`.
 
 ---
 
@@ -300,7 +300,7 @@ We need:
 - Port / service
 - What `svc-monitor` can do there (e.g., LDAP bind to DC, SMB read to SYSVOL, WinRM login, etc.)
 
-**Why:** RNG-IT-02 M3 Vault `secret/pul/ad` currently contains `pivot_note: "Prometheus metrics portal: 203.0.x.40:9090"` (pointing to M4 within our own range). After participants finish M4, they will use `svc-monitor` on the AD side. We need to know where to direct them from M3's Vault secret and from our assessment questions.
+**Why:** RNG-IT-02 M3 Vault `secret/pul/ad` currently contains `pivot_note: "Prometheus metrics portal: 203.x.x.x:9090"` (pointing to M4 within our own range). After participants finish M4, they will use `svc-monitor` on the AD side. We need to know where to direct them from M3's Vault secret and from our assessment questions.
 
 **Provide:** `pivot_note` value we should plant in `secret/pul/ad` pointing to your first AD target. Format: `"AD Domain Controller: 193.x.x.x:389"` or similar.
 
@@ -332,7 +332,7 @@ We want to make sure the solve path from M3 → AD Zone M1 is unambiguous for pa
 
 ## B.6 Anything Planted in AD That References RNG-IT-02 Services
 
-**What we need:** If your AD zone machines reference any RNG-IT-02 IPs, hostnames, or credentials (e.g., a discovered network map showing 203.0.x.x hosts, or a script that talks to our LDAP), please tell us so we can make sure those references are consistent.
+**What we need:** If your AD zone machines reference any RNG-IT-02 IPs, hostnames, or credentials (e.g., a discovered network map showing 203.0.2.x hosts, or a script that talks to our LDAP), please tell us so we can make sure those references are consistent.
 
 ---
 
@@ -342,22 +342,22 @@ Use this checklist to confirm readiness before exercise execution:
 
 | # | Item | Owner | Status |
 |---|---|---|---|
-| 1 | AD forest `corp.prabalurja.in` deployed at `193.0.x.x` | AD Team | ☐ |
+| 1 | AD forest `corp.prabalurja.in` deployed at `193.x.x.x` | AD Team | ☐ |
 | 2 | OU structure created per Section A.2 | AD Team | ☐ |
 | 3 | All employee accounts created per A.3 | AD Team | ☐ |
 | 4 | `svc-monitor` created with password `M0n!tor@PUL24` exactly | AD Team | ☐ |
 | 5 | `svc-cicd`, `svc-deploy`, `svc-backup` created per A.4 | AD Team | ☐ |
 | 6 | Security groups created per A.5 | AD Team | ☐ |
 | 7 | GPOs created per A.6 | AD Team | ☐ |
-| 8 | `dev-jump.prabalurja.in` at `11.0.x.x` deployed and SSH accessible | AD/DEV Team | ☐ |
+| 8 | `dev-jump.prabalurja.in` at `11.x.x.x` deployed and SSH accessible | AD/DEV Team | ☐ |
 | 9 | SSH key pair generated; public key on dev-jump; private key sent to IT-02 team | AD/DEV Team | ☐ |
 | 10 | DNS records created per A.8 | AD Team | ☐ |
-| 11 | DNS resolution for `corp.prabalurja.in` confirmed from `203.0.x.x/24` | AD Team | ☐ |
+| 11 | DNS resolution for `corp.prabalurja.in` confirmed from `203.x.x.x/24` | AD Team | ☐ |
 | 12 | `svc-monitor` pivot path confirmed (B.3 and B.4 answered) | AD Team | ☐ |
 | 13 | `secret/pul/ad` in RNG-IT-02 M3 Vault updated with correct DC IP and pivot_note | IT-02 Team | ☐ |
 | 14 | M5 AWX job output updated with real SSH private key material | IT-02 Team | ☐ |
-| 15 | Cross-zone connectivity tested: `203.0.x.30` → `193.0.x.x:389` (Vault to DC) | Both Teams | ☐ |
-| 16 | Cross-zone connectivity tested: `11.0.x.x:22` reachable from `203.0.x.x` | Both Teams | ☐ |
+| 15 | Cross-zone connectivity tested: `203.x.x.x` → `193.x.x.x:389` (Vault to DC) | Both Teams | ☐ |
+| 16 | Cross-zone connectivity tested: `11.x.x.x:22` reachable from `203.x.x.x` | Both Teams | ☐ |
 
 ---
 
@@ -365,14 +365,14 @@ Use this checklist to confirm readiness before exercise execution:
 
 > **Print this card and keep it during implementation.**
 
-**Forest:** `corp.prabalurja.in` | **DC01 IP:** `193.0.x.x`
+**Forest:** `corp.prabalurja.in` | **DC01 IP:** `193.x.x.x`
 
 **Critical Password - DO NOT CHANGE:**
 - `svc-monitor` → `M0n!tor@PUL24`
 - `svc-cicd` → `CICD@Deploy!2024`
 - `svc-deploy` → `D3pl0y@PUL2024`
 
-**Jump Host:** `dev-jump.prabalurja.in` = `11.0.x.x` | User: `devops` | OS: Ubuntu 22.04
+**Jump Host:** `dev-jump.prabalurja.in` = `11.x.x.x` | User: `devops` | OS: Ubuntu 22.04
 
 **What to Send Back to IT-02 Team:**
 1. SSH public key for `devops@dev-jump.prabalurja.in`
