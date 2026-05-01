@@ -41,7 +41,7 @@ Issue EHLO:
 EHLO attacker.com
 ```
 
-<img width="1129" height="507" alt="image" src="https://github.com/user-attachments/assets/c7b20207-2621-4f12-a4ec-7fcdea72844a" />
+<img width="969" height="583" alt="image" src="https://github.com/user-attachments/assets/989fc8c0-a925-4735-89f3-dfbdad435baa" />
 
 
 Observe: no AUTH requirement in the capabilities list — open relay confirmed.
