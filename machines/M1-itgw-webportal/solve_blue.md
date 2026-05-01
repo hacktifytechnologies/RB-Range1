@@ -33,6 +33,9 @@ cat /var/log/pul-portal/reset_requests.log
 ------------------------------------------------------------
 ```
 
+<img width="1936" height="411" alt="image" src="https://github.com/user-attachments/assets/62fce851-d4e6-426e-93eb-cb056b4dd07c" />
+
+
 **Indicator:** The `Reset URL` domain does NOT match the server's actual hostname (`203.x.x.x:8080`). Any entry where the reset URL contains a domain other than the server's own IP/hostname is a confirmed Host Header Injection attempt.
 
 ```bash
