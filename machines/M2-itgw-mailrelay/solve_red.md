@@ -89,6 +89,8 @@ Expected:
 ```
 <img width="1176" height="998" alt="image" src="https://github.com/user-attachments/assets/a78b4c6f-29c7-48ef-964e-8c1eebad2bc8" />
 
+<img width="978" height="830" alt="image" src="https://github.com/user-attachments/assets/dddada16-d4eb-4fe7-a714-d860db205099" />
+
 
 A `250 Ok: queued` response confirms the relay accepted the message without authentication.
 
