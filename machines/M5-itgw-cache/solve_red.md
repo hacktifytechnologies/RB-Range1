@@ -110,6 +110,9 @@ ldapsearch -x -H ldap://203.x.x.x:389 \
   -b "dc=prabalurja,dc=in" "(objectClass=*)" dn
 ```
 
+<img width="1279" height="373" alt="image" src="https://github.com/user-attachments/assets/2e91e2fe-7877-4578-82c9-d238efeb899d" />
+
+
 Successful bind confirms the pivot credential is valid for RNG-IT-02.
 
 ---
