@@ -60,7 +60,7 @@ A `252` or `250` response confirms the user exists. `550` means no such user.
 Expected:
 ```
 252 2.0.0 socanalyst
-252 2.0.0 it.admin
+252 2.0.0 administrator
 ```
 
 ### Step 3 — Relay Test (Demonstrate Open Relay)
