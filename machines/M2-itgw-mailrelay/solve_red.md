@@ -63,6 +63,9 @@ Expected:
 252 2.0.0 administrator
 ```
 
+<img width="832" height="272" alt="image" src="https://github.com/user-attachments/assets/be9ca59c-dd43-43d6-8f33-aeb77076fa3c" />
+
+
 ### Step 3 — Relay Test (Demonstrate Open Relay)
 
 ```bash
