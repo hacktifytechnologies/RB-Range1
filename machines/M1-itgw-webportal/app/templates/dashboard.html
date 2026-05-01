@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block extra_style %}
+.dashboard-wrap { max-width: 960px; margin: 0 auto; }
+.welcome-bar {
+    background: var(--navy);
+    border: 1px solid rgba(196,165,62,0.2);
+    border-left: 4px solid var(--gold);
+    border-radius: 4px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.welcome-bar .greet { color: #fff; font-size: 15px; font-weight: 600; }
+.welcome-bar .greet span { color: var(--gold); }
+.welcome-bar .meta  { color: rgba(255,255,255,0.4); font-size: 11px; margin-top: 2px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.grid-full { grid-column: 1 / -1; }
+.stat-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.stat-icon {
+    width: 42px; height: 42px;
+    border-radius: 6px;
+    background: rgba(196,165,62,0.1);
+    border: 1px solid rgba(196,165,62,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+.stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.stat-value { font-size: 18px; font-weight: 700; color: var(--navy); margin-top: 2px; }
+.section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+}
+.infra-banner {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1A3A5C 100%);
+    border: 1px solid rgba(196,165,62,0.3);
+    border-radius: 6px;
+    padding: 1.25rem 1.5rem;
+}
+.infra-banner h3 { color: var(--gold); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.infra-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 13px;
+}
+.infra-row:last-child { border-bottom: none; }
+.infra-key { color: rgba(255,255,255,0.45); width: 140px; flex-shrink: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+.infra-val { color: #E8D28A; font-family: 'Courier New', Courier, monospace; font-size: 13px; }
+{% endblock %}
+
+{% block header_nav %}
+<a href="/dashboard">Dashboard</a>
+<span style="color:rgba(255,255,255,0.2)">|</span>
+<a href="#" style="color:rgba(255,255,255,0.4); cursor:not-allowed;">My Profile</a>
+<a href="/logout" class="badge">Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrap">
+    <!-- Welcome bar -->
+    <div class="welcome-bar">
+        <div>
+            <div class="greet">Welcome back, <span>{{ user.name }}</span></div>
+            <div class="meta">{{ user.dept }} &nbsp;·&nbsp; {{ user.email }} &nbsp;·&nbsp;
+                <span class="badge-role badge-{{ user.role }}">{{ user.role | upper }}</span>
+            </div>
+        </div>
+        <div style="text-align:right;">
+            <div style="color:rgba(255,255,255,0.35); font-size:11px;">Last Login</div>
+            <div style="color:var(--gold-light); font-size:12px; font-family:monospace;">Session Active</div>
+        </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="grid" style="margin-bottom:1.5rem;">
+        <div class="stat-box">
+            <div class="stat-icon">⚡</div>
+            <div>
+                <div class="stat-label">Grid Uptime</div>
+                <div class="stat-value">99.97%</div>
+            </div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon">🔔</div>
+            <div>
+                <div class="stat-label">Active Alerts</div>
+                <div class="stat-value">3</div>
+            </div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon">🔒</div>
+            <div>
+                <div class="stat-label">Security Status</div>
+                <div class="stat-value" style="color:var(--success);">Operational</div>
+            </div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon">📋</div>
+            <div>
+                <div class="stat-label">Open Tickets</div>
+                <div class="stat-value">7</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin infra panel — only shown to admin role -->
+    {% if internal_info %}
+    <div class="grid-full" style="margin-bottom:1.5rem;">
+        <div class="section-title">IT Infrastructure — Administrative View</div>
+        <div class="infra-banner">
+            <h3>Internal Network Services Registry</h3>
+            <div class="infra-row">
+                <span class="infra-key">Mail Relay Host</span>
+                <span class="infra-val">{{ internal_info.mail_relay_host }}</span>
+            </div>
+            <div class="infra-row">
+                <span class="infra-key">Mail Relay Port</span>
+                <span class="infra-val">{{ internal_info.mail_relay_port }}</span>
+            </div>
+            <div class="infra-row">
+                <span class="infra-key">Relay Auth</span>
+                <span class="infra-val">{{ internal_info.mail_relay_user }}</span>
+            </div>
+            <div class="infra-row">
+                <span class="infra-key">Description</span>
+                <span class="infra-val">{{ internal_info.mail_relay_note }}</span>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Employee quick links -->
+    <div class="section-title">Employee Services</div>
+    <div class="grid">
+        <div class="card">
+            <div class="card-header"><h2>Pay & Allowances</h2></div>
+            <div class="card-body" style="font-size:13px; color:var(--muted);">
+                View payslips, tax declarations, and allowance requests. Access restricted to authorised HR portal.
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h2>Leave Management</h2></div>
+            <div class="card-body" style="font-size:13px; color:var(--muted);">
+                Apply for leave, view approval status, and review your leave balance for the current fiscal year.
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h2>IT Support Tickets</h2></div>
+            <div class="card-body" style="font-size:13px; color:var(--muted);">
+                Raise and track IT support requests. SLA: P1 — 2 hrs, P2 — 8 hrs, P3 — 3 business days.
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header"><h2>Security Advisories</h2></div>
+            <div class="card-body" style="font-size:13px; color:var(--muted);">
+                CERT-In advisories, internal security bulletins, and mandatory awareness training modules.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+id: gridfall-rng-it01-m03-credential-access
+name: GRIDFALL-Setup-M3-itgw-sso
+description: |
+  OPERATION GRIDFALL | RNG-IT-01 | Corporate Gateway — Machine 3
+  The PUL Staff Authentication Gateway issues signed tokens upon successful
+  service account authentication. Participants must authenticate using
+  credentials obtained from the previous stage, analyse the issued session
+  token's structure and signing mechanism, and identify a flaw in how the
+  gateway validates token integrity. Investigate how the authentication
+  library processes algorithm declarations within tokens and whether trust
+  boundaries between token issuance and verification can be exploited to
+  elevate privileges and access restricted administrative functionality.
+tactic: credential-access
+technique_id: T1606
+technique_name: Forge Web Credentials
+sub_technique: ""
+tag: range
+executors:
+  - name: sh
+    platform: linux
+    command: |
+      chmod +x /opt/pul-sso/app/app.py && systemctl is-active --quiet pul-sso && echo "M3 challenge active" || systemctl start pul-sso
+    payloads: []
+    parsers: []

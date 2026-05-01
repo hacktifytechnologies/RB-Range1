@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Prabal Urja Limited{% endblock %} | Employee Services</title>
+    <style>
+        :root {
+            --navy:       #0D1B2A;
+            --navy-mid:   #1A3A5C;
+            --navy-light: #1E4976;
+            --gold:       #C4A53E;
+            --gold-light: #E8D28A;
+            --bg:         #EEF1F5;
+            --card:       #FFFFFF;
+            --text:       #1A1A2E;
+            --muted:      #6B7280;
+            --border:     #D1D5DB;
+            --danger:     #B91C1C;
+            --danger-bg:  #FEE2E2;
+            --success:    #15803D;
+            --success-bg: #DCFCE7;
+            --info-bg:    #DBEAFE;
+            --info:       #1D4ED8;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        a { color: var(--gold); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ── Top strip ─────────────────────────────────── */
+        .topstrip {
+            background: var(--navy-mid);
+            padding: 5px 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 0.03em;
+        }
+        .topstrip .flag { color: rgba(255,255,255,0.65); }
+
+        /* ── Header ────────────────────────────────────── */
+        .site-header {
+            background: var(--navy);
+            border-bottom: 3px solid var(--gold);
+            padding: 0 2rem;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+        .logo-wrap:hover { text-decoration: none; }
+        .logo-emblem {
+            width: 44px;
+            height: 44px;
+            background: rgba(196,165,62,0.12);
+            border: 1.5px solid rgba(196,165,62,0.35);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+        .logo-text .org { color: var(--gold); font-size: 15px; font-weight: 700; letter-spacing: 0.04em; }
+        .logo-text .sub { color: rgba(255,255,255,0.45); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 2px; }
+
+        .header-nav { display: flex; align-items: center; gap: 1.5rem; }
+        .header-nav a { color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 0.02em; }
+        .header-nav a:hover { color: var(--gold); text-decoration: none; }
+        .header-nav .badge {
+            background: var(--gold);
+            color: var(--navy);
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 3px;
+            letter-spacing: 0.05em;
+        }
+
+        /* ── Main ──────────────────────────────────────── */
+        .site-main { flex: 1; padding: 2.5rem 2rem; }
+
+        /* ── Card ──────────────────────────────────────── */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+            overflow: hidden;
+        }
+        .card-header {
+            background: var(--navy);
+            border-bottom: 2px solid var(--gold);
+            padding: 1rem 1.5rem;
+        }
+        .card-header h2 { color: #fff; font-size: 15px; font-weight: 600; }
+        .card-header p  { color: rgba(255,255,255,0.5); font-size: 11px; margin-top: 3px; letter-spacing: 0.03em; }
+        .card-body { padding: 1.75rem; }
+
+        /* ── Form elements ─────────────────────────────── */
+        .form-group { margin-bottom: 1.1rem; }
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text);
+            background: #FAFAFA;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(196,165,62,0.13);
+        }
+        .form-hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+        /* ── Buttons ───────────────────────────────────── */
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: opacity 0.15s;
+        }
+        .btn:hover { opacity: 0.88; text-decoration: none; }
+        .btn-primary { background: var(--gold); color: var(--navy); width: 100%; text-align: center; }
+        .btn-outline  { background: transparent; border: 1px solid var(--gold); color: var(--gold); }
+
+        /* ── Alerts ────────────────────────────────────── */
+        .alert {
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-bottom: 1rem;
+            border-left: 3px solid;
+        }
+        .alert-danger  { background: var(--danger-bg);  color: var(--danger);  border-color: var(--danger);  }
+        .alert-success { background: var(--success-bg); color: var(--success); border-color: var(--success); }
+        .alert-info    { background: var(--info-bg);    color: var(--info);    border-color: var(--info);    }
+
+        /* ── Info table ────────────────────────────────── */
+        .info-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .info-table th {
+            text-align: left;
+            padding: 8px 12px;
+            background: var(--bg);
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid var(--border);
+        }
+        .info-table td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #F3F4F6;
+            color: var(--text);
+        }
+        .info-table tr:last-child td { border-bottom: none; }
+        .mono { font-family: 'Courier New', Courier, monospace; font-size: 12px; }
+        .badge-role {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .badge-admin   { background: rgba(196,165,62,0.15); color: var(--gold); }
+        .badge-analyst { background: rgba(30,73,118,0.12);  color: var(--navy-light); }
+
+        /* ── Utility ───────────────────────────────────── */
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+        .small-link { font-size: 12px; color: var(--muted); }
+        .small-link a { color: var(--gold); }
+
+        /* ── Footer ────────────────────────────────────── */
+        .site-footer {
+            background: var(--navy);
+            border-top: 2px solid var(--navy-mid);
+            padding: 14px 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: rgba(255,255,255,0.3);
+            flex-shrink: 0;
+        }
+        .site-footer .highlight { color: rgba(196,165,62,0.7); }
+
+        {% block extra_style %}{% endblock %}
+    </style>
+</head>
+<body>
+    <div class="topstrip">
+        <span class="flag">🇮🇳 Government of India &nbsp;|&nbsp; Ministry of Power &nbsp;|&nbsp; Prabal Urja Limited</span>
+        <span>RESTRICTED — Authorised Personnel Only &nbsp;|&nbsp; Classification: INTERNAL</span>
+    </div>
+
+    <header class="site-header">
+        <a href="/" class="logo-wrap">
+            <div class="logo-emblem">
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                    <path d="M15 2L6 15h8l-3 9 13-14h-9l3-8z" fill="#C4A53E"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="org">Prabal Urja Limited</span>
+                <span class="sub">Employee Self-Service Portal</span>
+            </div>
+        </a>
+        <nav class="header-nav">
+            {% block header_nav %}{% endblock %}
+        </nav>
+    </header>
+
+    <main class="site-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <span>© 2024 <span class="highlight">Prabal Urja Limited</span>. All Rights Reserved. &nbsp;|&nbsp; National Grid Operations &nbsp;|&nbsp; IT Ref: PUL-ESP-v3.1</span>
+        <span>Helpdesk: <span class="highlight">1800-PUL-HELP</span> &nbsp;|&nbsp; Security: <span class="highlight">cert@prabalurja.in</span></span>
+    </footer>
+</body>
+</html>

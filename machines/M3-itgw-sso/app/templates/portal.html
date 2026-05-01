@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% block title %}Staff Portal — Auth Gateway{% endblock %}
+
+{% block extra_style %}
+.portal-wrap { max-width: 960px; margin: 0 auto; }
+.session-bar {
+    background: var(--navy);
+    border: 1px solid rgba(14,116,144,0.25);
+    border-left: 4px solid var(--teal);
+    border-radius: 4px;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+.session-bar .user-info .name { color: #fff; font-size: 14px; font-weight: 600; }
+.session-bar .user-info .meta { color: rgba(255,255,255,0.38); font-size: 11px; margin-top: 2px; }
+.jwt-section { margin-bottom: 1.5rem; }
+.token-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+.token-box {
+    background: var(--navy);
+    border: 1px solid rgba(200,168,75,0.2);
+    border-radius: 4px;
+    padding: 12px 14px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    word-break: break-all;
+    line-height: 1.8;
+}
+.token-box .part-header  { color: #60A5FA; }
+.token-box .part-dot     { color: rgba(255,255,255,0.2); }
+.token-box .part-payload { color: #86EFAC; }
+.token-box .part-sig     { color: #FCA5A5; }
+.token-hint { font-size: 11px; color: var(--muted); margin-top: 6px; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+.stat-tile {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: 1rem;
+}
+.stat-icon {
+    width: 40px; height: 40px;
+    border-radius: 6px;
+    background: rgba(14,116,144,0.08);
+    border: 1px solid rgba(14,116,144,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+}
+.stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.stat-val   { font-size: 17px; font-weight: 700; color: var(--navy); margin-top: 2px; }
+{% endblock %}
+
+{% block header_nav %}
+<a href="/staff-portal">Portal</a>
+<span style="color:rgba(255,255,255,0.15)">|</span>
+<a href="/logout" class="btn-signout">Sign Out</a>
+{% endblock %}
+
+{% block content %}
+<div class="portal-wrap">
+    <!-- Session bar -->
+    <div class="session-bar">
+        <div class="user-info">
+            <div class="name">
+                {{ user.sub }}
+                <span class="badge badge-{{ user.role }}">{{ user.role | upper }}</span>
+                <span class="badge badge-active">SESSION ACTIVE</span>
+            </div>
+            <div class="meta">Authenticated via Staff Auth Gateway · Token valid 60 min · All actions audited</div>
+        </div>
+        <a href="/logout" class="btn-signout">Sign Out</a>
+    </div>
+
+    <!-- JWT Token display (for participant analysis) -->
+    <div class="jwt-section">
+        <div class="token-label">Current Session Token (JWT)</div>
+        {% set parts = token_raw.split('.') %}
+        <div class="token-box">
+            <span class="part-header">{{ parts[0] if parts|length > 0 else '' }}</span><span class="part-dot">.</span><span class="part-payload">{{ parts[1] if parts|length > 1 else '' }}</span><span class="part-dot">.</span><span class="part-sig">{{ parts[2] if parts|length > 2 else '' }}</span>
+        </div>
+        <div class="token-hint">
+            Header (blue) · Payload (green) · Signature (red) — Base64URL encoded, dot-separated. Algorithm: HS256.
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid-2">
+        <div class="stat-tile"><div class="stat-icon">🔑</div><div><div class="stat-label">Auth Method</div><div class="stat-val">JWT/HS256</div></div></div>
+        <div class="stat-tile"><div class="stat-icon">🛡</div><div><div class="stat-label">Access Level</div><div class="stat-val">{{ user.role | capitalize }}</div></div></div>
+        <div class="stat-tile"><div class="stat-icon">📡</div><div><div class="stat-label">Gateway Version</div><div class="stat-val">PUL-IAM v2.4</div></div></div>
+        <div class="stat-tile"><div class="stat-icon">🕐</div><div><div class="stat-label">Session Expiry</div><div class="stat-val">60 min</div></div></div>
+    </div>
+
+    <!-- Admin infra panel — only shown to admin role -->
+    {% if infra %}
+    <div class="section-label">Network Infrastructure — Administrative View</div>
+    <div class="infra-panel mt-2" style="margin-bottom:1.5rem;">
+        <h3>Network Management Services Registry</h3>
+        <div class="infra-row"><span class="infra-key">SNMP Host</span><span class="infra-val">{{ infra.snmp_host }}</span></div>
+        <div class="infra-row"><span class="infra-key">SNMP Port</span><span class="infra-val">{{ infra.snmp_port }}</span></div>
+        <div class="infra-row"><span class="infra-key">SNMP Version</span><span class="infra-val">{{ infra.snmp_version }}</span></div>
+        <div class="infra-row"><span class="infra-key">Description</span><span class="infra-val">{{ infra.snmp_note }}</span></div>
+    </div>
+    {% else %}
+    <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-header"><h2>Restricted Area</h2><p>Elevated privileges required to access network infrastructure registry</p></div>
+        <div class="card-body" style="color:var(--muted); font-size:13px;">
+            Your current role (<strong>{{ user.role }}</strong>) does not have access to the network infrastructure panel.
+            Administrative access is required to view internal service topology and network management endpoints.
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Service account quick links -->
+    <div class="section-label">Available Integrations</div>
+    <div class="grid-2">
+        <div class="card"><div class="card-header"><h2>API Token Management</h2></div><div class="card-body" style="font-size:13px; color:var(--muted);">Generate and rotate service account API tokens for pipeline integrations and automated deployments.</div></div>
+        <div class="card"><div class="card-header"><h2>Audit Log Access</h2></div><div class="card-body" style="font-size:13px; color:var(--muted);">View authentication events and access logs for your service account. Data retained for 90 days per CERT-In guidelines.</div></div>
+    </div>
+</div>
+{% endblock %}

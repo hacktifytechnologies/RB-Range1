@@ -1,0 +1,24 @@
+id: gridfall-rng-it01-m04-discovery
+name: GRIDFALL-Setup-M4-itgw-netmgmt
+description: |
+  OPERATION GRIDFALL | RNG-IT-01 | Corporate Gateway — Machine 4
+  A network management host has been identified on the Corporate Gateway
+  segment operating a standard network monitoring protocol. Participants
+  must discover the service, determine the authentication mechanism in use,
+  and enumerate the management information base for operational artefacts.
+  The private enterprise MIB tree may contain information placed by internal
+  IT processes. Analyse all available OID subtrees systematically and
+  identify how credential material embedded in monitoring configurations
+  can be extracted to progress the intrusion chain.
+tactic: discovery
+technique_id: T1046
+technique_name: Network Service Discovery
+sub_technique: ""
+tag: range
+executors:
+  - name: sh
+    platform: linux
+    command: |
+      chmod 640 /etc/snmp/snmpd.conf && systemctl is-active --quiet snmpd && echo "M4 challenge active" || systemctl start snmpd
+    payloads: []
+    parsers: []

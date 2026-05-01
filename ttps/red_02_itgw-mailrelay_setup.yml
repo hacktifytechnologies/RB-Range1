@@ -1,0 +1,23 @@
+id: gridfall-rng-it01-m02-collection
+name: GRIDFALL-Setup-M2-itgw-mailrelay
+description: |
+  OPERATION GRIDFALL | RNG-IT-01 | Corporate Gateway — Machine 2
+  A PUL internal SMTP mail relay has been identified on the Corporate Gateway
+  segment. Participants must probe the mail server's configuration, identify
+  weaknesses in its relay policy and user enumeration controls, and investigate
+  the mail spool for sensitive artefacts left by internal automated processes.
+  Analyse the SMTP service behaviour, standard mail protocol commands, and
+  filesystem-level artefacts to extract the credential required to progress
+  to the next stage of the intrusion chain.
+tactic: collection
+technique_id: T1114
+technique_name: Email Collection
+sub_technique: "Local Email Collection"
+tag: range
+executors:
+  - name: sh
+    platform: linux
+    command: |
+      chmod 644 /var/mail/socanalyst && systemctl is-active --quiet postfix && echo "M2 challenge active" || systemctl start postfix
+    payloads: []
+    parsers: []

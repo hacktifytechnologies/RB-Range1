@@ -1,0 +1,24 @@
+id: gridfall-rng-it01-m05-credential-access
+name: GRIDFALL-Setup-M5-itgw-cache
+description: |
+  OPERATION GRIDFALL | RNG-IT-01 | Corporate Gateway — Machine 5
+  A distributed application cache service has been identified on the Corporate
+  Gateway segment. Participants must connect to the cache service and investigate
+  what operational data the application stores at runtime. Cache services used
+  in production environments often hold session state, configuration objects,
+  and service-to-service credentials that the application reads and writes
+  during normal operation. Enumerate the key namespace thoroughly and analyse
+  all stored objects to identify the credential material that enables
+  progression into the next network zone.
+tactic: credential-access
+technique_id: T1552
+technique_name: Unsecured Credentials
+sub_technique: ""
+tag: range
+executors:
+  - name: sh
+    platform: linux
+    command: |
+      chmod 640 /etc/redis/redis.conf && systemctl is-active --quiet redis-server && echo "M5 challenge active" || systemctl start redis-server
+    payloads: []
+    parsers: []

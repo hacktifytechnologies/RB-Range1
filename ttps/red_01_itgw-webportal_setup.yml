@@ -1,0 +1,24 @@
+id: gridfall-rng-it01-m01-initial-access
+name: GRIDFALL-Setup-M1-itgw-webportal
+description: |
+  OPERATION GRIDFALL | RNG-IT-01 | Corporate Gateway — Machine 1
+  The KAAL CHAKRA threat actor has identified the Prabal Urja Limited Employee
+  Self-Service Portal as an initial access vector. Participants must analyse the
+  password reset mechanism, identify the trust misconfiguration in how the
+  application constructs reset URLs, and determine how an unauthenticated
+  adversary can leverage this to obtain a valid administrative session without
+  knowing the target account's password. Investigate authentication flows,
+  HTTP request headers, and application response behaviour to uncover the
+  attack path and the internal infrastructure detail exposed post-compromise.
+tactic: initial-access
+technique_id: T1190
+technique_name: Exploit Public-Facing Application
+sub_technique: ""
+tag: range
+executors:
+  - name: sh
+    platform: linux
+    command: |
+      chmod +x /opt/pul-portal/app/app.py && chmod +x /opt/pul-portal/app/init_db.py && systemctl is-active --quiet pul-portal && echo "M1 challenge active" || systemctl start pul-portal
+    payloads: []
+    parsers: []

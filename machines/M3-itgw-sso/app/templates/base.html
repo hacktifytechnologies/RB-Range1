@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PUL Staff Auth Gateway{% endblock %} | Prabal Urja Limited</title>
+    <style>
+        :root {
+            --navy:     #0A1628;
+            --navy-2:   #122040;
+            --navy-3:   #1A3A5C;
+            --gold:     #C8A84B;
+            --gold-2:   #E8D28A;
+            --teal:     #0E7490;
+            --teal-2:   #0891B2;
+            --bg:       #F0F4F8;
+            --card:     #FFFFFF;
+            --text:     #111827;
+            --muted:    #6B7280;
+            --border:   #D1D5DB;
+            --danger:   #B91C1C;
+            --dbg:      #FEF2F2;
+            --success:  #065F46;
+            --sbg:      #ECFDF5;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        a { color: var(--teal-2); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        .topbar {
+            background: var(--navy-2);
+            padding: 5px 2rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10.5px;
+            color: rgba(255,255,255,0.38);
+            letter-spacing: 0.04em;
+        }
+
+        .site-header {
+            background: var(--navy);
+            border-bottom: 3px solid var(--teal);
+            height: 66px;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .logo-wrap { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+        .logo-wrap:hover { text-decoration: none; }
+        .logo-icon {
+            width: 42px; height: 42px;
+            background: rgba(14,116,144,0.15);
+            border: 1.5px solid rgba(14,116,144,0.4);
+            border-radius: 6px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+        .logo-text .org  { color: var(--gold); font-size: 14px; font-weight: 700; letter-spacing: 0.04em; }
+        .logo-text .sub  { color: rgba(255,255,255,0.38); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 2px; }
+
+        .header-nav { display: flex; align-items: center; gap: 1.5rem; }
+        .header-nav a { color: rgba(255,255,255,0.55); font-size: 13px; }
+        .header-nav a:hover { color: var(--gold); text-decoration: none; }
+        .btn-signout {
+            background: transparent;
+            border: 1px solid rgba(14,116,144,0.5);
+            color: var(--teal-2);
+            padding: 5px 14px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+        .btn-signout:hover { background: rgba(14,116,144,0.1); text-decoration: none; }
+
+        .site-main { flex: 1; padding: 2.5rem 2rem; }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+        }
+        .card-header {
+            background: var(--navy);
+            border-bottom: 2px solid var(--teal);
+            padding: 1rem 1.5rem;
+        }
+        .card-header h2 { color: #fff; font-size: 15px; font-weight: 600; }
+        .card-header p  { color: rgba(255,255,255,0.45); font-size: 11px; margin-top: 3px; }
+        .card-body { padding: 1.75rem; }
+
+        .form-group { margin-bottom: 1.1rem; }
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 14px;
+            background: #FAFAFA;
+            color: var(--text);
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--teal-2);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(8,145,178,0.12);
+        }
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background: var(--teal);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-primary:hover { background: var(--teal-2); }
+
+        .alert {
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-bottom: 1rem;
+            border-left: 3px solid;
+        }
+        .alert-danger  { background: var(--dbg); color: var(--danger); border-color: var(--danger); }
+        .alert-success { background: var(--sbg); color: var(--success); border-color: var(--success); }
+
+        .mono {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            background: #0A1628;
+            color: #C8A84B;
+            padding: 10px 14px;
+            border-radius: 4px;
+            word-break: break-all;
+            line-height: 1.7;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        .badge-admin    { background: rgba(200,168,75,0.15); color: var(--gold); }
+        .badge-analyst  { background: rgba(14,116,144,0.12); color: var(--teal); }
+        .badge-active   { background: rgba(6,95,70,0.12); color: var(--success); }
+
+        .infra-panel {
+            background: var(--navy);
+            border: 1px solid rgba(14,116,144,0.3);
+            border-radius: 6px;
+            padding: 1.25rem;
+        }
+        .infra-panel h3 { color: var(--teal-2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.75rem; }
+        .infra-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; }
+        .infra-row:last-child { border-bottom: none; }
+        .infra-key { color: rgba(255,255,255,0.38); width: 130px; flex-shrink: 0; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .infra-val { color: var(--gold-2); font-family: 'Courier New', Courier, monospace; font-size: 13px; }
+
+        .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.6rem; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .text-center { text-align: center; }
+        .muted { color: var(--muted); font-size: 12px; }
+        .divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+
+        .site-footer {
+            background: var(--navy);
+            border-top: 1px solid var(--navy-2);
+            padding: 12px 2rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: rgba(255,255,255,0.25);
+            flex-shrink: 0;
+        }
+        .site-footer .hi { color: rgba(14,116,144,0.6); }
+
+        {% block extra_style %}{% endblock %}
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <span>🇮🇳 Government of India — Ministry of Power | Prabal Urja Limited | Identity & Access Management</span>
+        <span>RESTRICTED — Authorised Service Accounts Only</span>
+    </div>
+    <header class="site-header">
+        <a href="/" class="logo-wrap">
+            <div class="logo-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect x="3" y="3" width="8" height="8" rx="1.5" fill="#0E7490" opacity="0.7"/>
+                    <rect x="13" y="3" width="8" height="8" rx="1.5" fill="#C8A84B" opacity="0.7"/>
+                    <rect x="3" y="13" width="8" height="8" rx="1.5" fill="#C8A84B" opacity="0.7"/>
+                    <rect x="13" y="13" width="8" height="8" rx="1.5" fill="#0E7490" opacity="0.7"/>
+                </svg>
+            </div>
+            <div class="logo-text">
+                <span class="org">Prabal Urja Limited</span>
+                <span class="sub">Staff Authentication Gateway</span>
+            </div>
+        </a>
+        <nav class="header-nav">
+            {% block header_nav %}{% endblock %}
+        </nav>
+    </header>
+    <main class="site-main">
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+        <span>© 2024 <span class="hi">Prabal Urja Limited</span>. All Rights Reserved. | IAM Gateway v2.4 | Ref: PUL-IAM-GW</span>
+        <span>CERT-In Registered | NCIIPC Compliant | Helpdesk: <span class="hi">1800-PUL-HELP</span></span>
+    </footer>
+</body>
+</html>
