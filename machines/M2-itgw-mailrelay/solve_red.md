@@ -52,7 +52,7 @@ Observe: no AUTH requirement in the capabilities list — open relay confirmed.
 # Test VRFY for known usernames
 echo "VRFY socanalyst" | nc -q2 203.x.x.x 25
 echo "VRFY it.admin"   | nc -q2 203.x.x.x 25
-echo "VRFY admin"      | nc -q2 203.x.x.x 25
+echo "VRFY administrator" | nc -q2 203.x.x.x 25
 ```
 
 A `252` or `250` response confirms the user exists. `550` means no such user.
