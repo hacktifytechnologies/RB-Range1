@@ -19,6 +19,8 @@ grep "ALG_NONE_ACCEPTED" /var/log/pul-sso/sso.log
 ```
 2024-11-15 10:12:44,331 [WARNING] ALG_NONE_ACCEPTED | sub=svc-deploy-sso role=admin from=203.0.1.X
 ```
+<img width="1617" height="106" alt="image" src="https://github.com/user-attachments/assets/748672b3-18ab-4079-947b-917caf83285c" />
+
 
 Any `ALG_NONE_ACCEPTED` log entry is a confirmed JWT algorithm confusion attack.
 
@@ -27,6 +29,8 @@ Any `ALG_NONE_ACCEPTED` log entry is a confirmed JWT algorithm confusion attack.
 # Look for admin access from a service account that should only have analyst role
 grep "PORTAL_ACCESS" /var/log/pul-sso/sso.log | grep "role=admin" | grep "svc-deploy"
 ```
+<img width="1747" height="101" alt="image" src="https://github.com/user-attachments/assets/41a58068-897e-427a-81b3-02feb4762e55" />
+
 
 ### 3 — Network-Level Detection
 Requests containing a JWT cookie where the header decodes to `{"alg":"none"}` can be detected at WAF/proxy level:
