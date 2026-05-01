@@ -14,6 +14,8 @@ DOMAIN="prabalurja.in"
 HOSTNAME="mail.prabalurja.in"
 MAIL_USER="socanalyst"
 MAIL_USER_PASS="SOC@Relay!77"
+MAIL_USER2="admin"
+MAIL_USER_PASS2="Etoiobelim@1904?"
 SPOOL_FILE="/var/mail/${MAIL_USER}"
 LOG_DIR="/var/log/pul-mailrelay"
 SERVICE_NAME="postfix"
@@ -39,6 +41,17 @@ if ! id -u "${MAIL_USER}" &>/dev/null; then
 else
     echo "[~] User '${MAIL_USER}' exists, ensuring password is set..."
     echo "${MAIL_USER}:${MAIL_USER_PASS}" | chpasswd
+fi
+# Adding admin user
+echo "[*] Creating mail system user 2 '${MAIL_USER2}'..."
+if ! id -u "${MAIL_USER2}" &>/dev/null; then
+    useradd --system --no-create-home --shell /usr/sbin/nologin \
+            --comment "PUL SOC Analyst Mail Account" "${MAIL_USER2}"
+    echo "${MAIL_USER2}:${MAIL_USER_PASS2}" | chpasswd
+    echo "[+] User '${MAIL_USER2}' created."
+else
+    echo "[~] User '${MAIL_USER2}' exists, ensuring password is set..."
+    echo "${MAIL_USER2}:${MAIL_USER_PASS2}" | chpasswd
 fi
 
 # ── Configure Postfix as open relay ──────────────────────────────────────────
