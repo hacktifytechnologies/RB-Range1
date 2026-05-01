@@ -33,6 +33,9 @@ Identify the running web service:
 nmap -sV -p 8080 203.x.x.x
 curl -s -o /dev/null -w "%{http_code}" http://203.0.x.x:8080/
 ```
+<img width="1309" height="468" alt="image" src="https://github.com/user-attachments/assets/b0d2ac89-eaca-4949-8195-7fb413a23581" />
+
+
 
 Navigate to the portal. Observe the login page, the `Forgot Password` link, and note that password reset is implemented. This is the attack surface.
 
