@@ -5,9 +5,9 @@
 
 ---
 
-## Threat Actor: KAAL CHAKRA
+## Threat Actor: APT38
 
-KAAL CHAKRA is a fictionalised Advanced Persistent Threat (APT) composite modelled on documented South Asian state-nexus threat actor tradecraft. The actor targets Indian critical information infrastructure (CII) — specifically power utilities, grid operations centres, and associated IT/OT supply chains. KAAL CHAKRA is characterised by patient, multi-stage intrusions with a preference for Living-off-the-Land (LotL) techniques, legitimate tool abuse, and credential-chain exploitation over noisy exploit frameworks.
+APT38 is an Advanced Persistent Threat (APT) composite modelled on documented north korean state-nexus threat actor tradecraft. The actor targets Indian critical information infrastructure (CII) — specifically power utilities, grid operations centres, and associated IT/OT supply chains. APT38 is characterised by patient, multi-stage intrusions with a preference for Living-off-the-Land (LotL) techniques, legitimate tool abuse, and credential-chain exploitation over noisy exploit frameworks.
 
 **Attribution Profile (Exercise):**
 - Likely state-sponsored
@@ -33,9 +33,9 @@ PUL's corporate IT is managed from a centralised data centre with regional subst
 
 ### Phase 1 — Initial Access (RNG-IT-01)
 
-KAAL CHAKRA has identified Prabal Urja Limited as a high-value target. Intelligence indicates PUL recently expanded its digital estate with a new Employee Self-Service Portal and an internal Staff Authentication Gateway — both accessible from the v-Public segment.
+APT38 has identified Prabal Urja Limited as a high-value target. Intelligence indicates PUL recently expanded its digital estate with a new Employee Self-Service Portal and an internal Staff Authentication Gateway — both accessible from the v-Public segment.
 
-KAAL CHAKRA operators initiate reconnaissance against the Corporate Gateway (`203.x.x.x/24`). They identify five internet-reachable services and begin a systematic, credential-chaining intrusion:
+APT38 operators initiate reconnaissance against the Corporate Gateway (`203.x.x.x/24`). They identify five internet-reachable services and begin a systematic, credential-chaining intrusion:
 
 **M1 — Employee Portal:** An operator identifies a password reset mechanism on the employee self-service portal. By manipulating an HTTP header in the reset request, the operator is able to intercept the admin account's reset token without controlling any external infrastructure. Admin dashboard access reveals an internal mail relay.
 
@@ -51,7 +51,7 @@ KAAL CHAKRA operators initiate reconnaissance against the Corporate Gateway (`20
 
 ### Phase 2 — Internal Operations (RNG-IT-02) [Subsequent Range]
 
-With the LDAP `svc-deploy` credential, KAAL CHAKRA pivots into the IT-Operations zone — an Active Directory-managed internal network hosting employee workstations, application servers, and internal APIs. This phase focuses on AD enumeration, lateral movement, and privilege escalation within the corporate domain.
+With the LDAP `svc-deploy` credential, APT38 pivots into the IT-Operations zone — an Active Directory-managed internal network hosting employee workstations, application servers, and internal APIs. This phase focuses on AD enumeration, lateral movement, and privilege escalation within the corporate domain.
 
 *(Scope of this range document — RNG-IT-01 only. RNG-IT-02 documentation is in the NEXUS-IT-OPS range package.)*
 
@@ -59,7 +59,7 @@ With the LDAP `svc-deploy` credential, KAAL CHAKRA pivots into the IT-Operations
 
 ### Phase 3 — Development Infrastructure (RNG-DEV-01) [Subsequent Range]
 
-From the IT-Ops zone, KAAL CHAKRA targets the CI/CD pipeline and code repositories in the DMZ. The objective shifts toward supply chain compromise — injecting malicious configuration into deployment pipelines that push to OT-adjacent systems.
+From the IT-Ops zone, APT38 targets the CI/CD pipeline and code repositories in the DMZ. The objective shifts toward supply chain compromise — injecting malicious configuration into deployment pipelines that push to OT-adjacent systems.
 
 ---
 
