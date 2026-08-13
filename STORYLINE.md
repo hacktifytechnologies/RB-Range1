@@ -49,8 +49,7 @@ APT38 operators initiate reconnaissance against the Corporate Gateway (`203.x.x.
 
 ---
 
-# Network Diagram — RNG-IT-01 · Corporate Gateway
-## OPERATION GRIDFALL | Prabal Urja Limited — NEXUS-IT Platform
+# Network Diagram 
 
 ---
 
